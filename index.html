@@ -21,7 +21,7 @@
             transition: background-image 0.5s ease-in-out;
         }
 
-        /* 📍 Premium Typography for Home Page */
+        /* 📍 Premium Typography */
         .hero-title {
             font-family: 'Inter', sans-serif;
             font-weight: 800;
@@ -34,6 +34,41 @@
             font-weight: 400;
             font-style: italic;
             letter-spacing: -0.02em;
+        }
+
+        /* 📍 Glassmorphism Components */
+        .figma-search-container {
+            width: 100%;
+            height: 68px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .figma-search-box {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50px;
+            box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.05);
+            padding: 0 40px;
+            color: white;
+            font-family: 'Noto Sans Thai Looped', sans-serif;
+            font-size: 1.2rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .figma-search-box::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .figma-search-box:focus {
+            border-color: rgba(34, 197, 94, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.05), 0 0 15px rgba(34, 197, 94, 0.1);
         }
 
         .figma-card {
@@ -58,24 +93,51 @@
             pointer-events: none;
         }
 
+        .figma-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0px 1px 2px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 999px;
+        }
+
+        /* 📍 Uniform Navbar Button Style */
+        .nav-button {
+            font-family: 'Noto Sans Thai Looped', serif;
+            color: white;
+            opacity: 0.8;
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .nav-button:hover {
+            opacity: 1;
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+            transform: translateY(-1px);
+        }
+
         .figma-button {
             background: rgba(255, 255, 255, 0.1);
             box-shadow: inset 0px -2px 4px rgba(255, 255, 255, 0.2), inset 0px 2px 4px rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
-            border-radius: 32px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .figma-badge {
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0px -1px 2px rgba(0, 0, 0, 0.2), inset 0px 1px 2px rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(0px);
-            border-radius: 80px;
-        }
-
-        .glass-modal {
-            background: #000000;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
+        .figma-button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .logo-container {
@@ -102,28 +164,35 @@
             text-shadow: 0 0 15px rgba(202, 202, 202, 0.2);
         }
 
+        /* 📍 Modal & Text Styles */
+        .glass-modal {
+            background: #000000;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+        }
+
         .jp-detail-text {
             color: #FFF;
             font-family: "BIZ UDMincho", serif;
             font-size: 36px;
             font-weight: 500;
-            line-height: 102.978%;
-        }
-
-        .en-detail-text {
-            color: #BABABA;
-            font-family: "Gowun Batang", serif;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 102.978%;
+            line-height: 1.1;
         }
 
         .thai-detail-text {
             color: #FFF;
             font-family: "Noto Sans Thai Looped", serif;
-            font-size: 32px;
+            font-size: 48px;
             font-weight: 400;
-            line-height: 102.978%;
+            line-height: 1.2;
+        }
+
+        .en-detail-text {
+            color: #BABABA;
+            font-family: "Gowun Batang", serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
         .font-jp {
@@ -197,14 +266,11 @@
                         id="L8">c</span><span id="L9">t</span>
                 </div>
             </h1>
-            <div class="space-x-6 flex items-center">
-                <button onclick="App.changeView('home')" id="nav-home"
-                    class="font-th font-large transition hover:text-green-400">หน้าแรก</button>
-                <button onclick="App.changeView('bookmarks')" id="nav-bookmarks"
-                    class="font-th text-white font-large opacity-70 hover:opacity-100 transition hover:text-green-400 whitespace-nowrap">พจนานุกรมของฉัน</button>
-                <button onclick="UI.openAddModal()"
-                    class="font-th text-white font-large opacity-70 hover:opacity-100 transition hover:text-green-400 flex items-center gap-1 border border-white/20 px-4 py-1.5 rounded-full bg-white/5">
-                    <span class="text-xl">+</span> เพิ่มคำศัพท์
+            <div class="space-x-4 flex items-center">
+                <button onclick="App.changeView('home')" class="nav-button">หน้าแรก</button>
+                <button onclick="App.changeView('bookmarks')" class="nav-button">พจนานุกรมของฉัน</button>
+                <button onclick="UI.openAddModal()" class="nav-button">
+                    <span class="text-xl leading-none -mt-1">+</span> เพิ่มคำศัพท์
                 </button>
             </div>
         </div>
@@ -214,22 +280,20 @@
         <div class="max-w-5xl text-left">
             <h1 class="hero-title text-white mb-10" style="font-size: clamp(3rem, 10vw, 8rem);">
                 <span class="block"><span style="color: #22C55E">Create</span> your own</span>
-                <span class="block hero-accent" style="color: rgba(255,255,255,0.8)">Japanese dictionary.</span>
+                <span class="block hero-accent whitespace-nowrap" style="color: rgba(255,255,255,0.8)">Japanese
+                    dictionary.</span>
             </h1>
             <button onclick="App.changeView('home')"
-                class="figma-button hover:bg-white/20 text-white text-2xl py-6 px-14 transition duration-500 font-th rounded-full tracking-wide">
-                เริ่มต้นกันเลย
-            </button>
+                class="figma-button text-white text-2xl py-6 px-14 font-th tracking-wide">เริ่มต้นกันเลย</button>
         </div>
     </section>
 
     <section id="view-main" class="max-w-5xl mx-auto px-6 mt-10 hidden">
-        <div id="search-section" class="mb-2">
-            <div class="relative">
-                <input type="text" id="search-input" placeholder="ค้นหาด้วย คันจิ, ฮิรางานะ คำไทย คำอังกฤษ..."
-                    class="w-full px-6 py-5 rounded-2xl border border-white/20 bg-white/10 text-white placeholder-gray-300 focus:ring-2 focus:ring-green-400 outline-none text-xl backdrop-blur-md font-th transition"
-                    oninput="App.handleSearch(this.value)">
-                <span class="absolute right-6 top-5 text-gray-300" id="icon-search-box"></span>
+        <div id="search-section" class="mb-10">
+            <div class="figma-search-container">
+                <input type="text" id="search-input" placeholder="ค้นหาด้วย คันจิ, ฮิรางานะ หรือความหมาย..."
+                    class="figma-search-box" oninput="App.handleSearch(this.value)">
+                <span class="absolute right-8 top-5 text-white/20" id="icon-search-box"></span>
             </div>
         </div>
         <div id="status-message"
@@ -240,7 +304,7 @@
 
     <div id="add-modal"
         class="fixed inset-0 z-[110] hidden flex-col justify-center items-center p-4 bg-black/90 backdrop-blur-xl">
-        <div class="glass-modal w-full max-w-2xl p-10 relative border border-white/10 overflow-y-auto max-h-[90vh]">
+        <div class="glass-modal w-full max-w-3xl p-10 relative border border-white/10 overflow-y-auto max-h-[90vh]">
             <button onclick="UI.closeAddModal()" class="absolute top-6 right-8 close-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -248,7 +312,8 @@
                     <path d="m6 6 12 12" />
                 </svg>
             </button>
-            <h2 class="font-th text-2xl text-green-400 mb-8 flex items-center gap-3">เพิ่มคำศัพท์ใหม่ (POST)</h2>
+            <h2 class="font-th text-2xl text-green-400 mb-8 flex items-center gap-3">เพิ่มคำศัพท์ใหม่</h2>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-th">
                 <div class="space-y-4">
                     <div><label class="form-label">คำศัพท์ (คันจิ) *</label><input type="text" id="add-kanji"
@@ -267,18 +332,33 @@
                             placeholder="English Meaning" class="form-input"></div>
                 </div>
             </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10">
+                <h3 class="font-th text-lg text-zinc-400 mb-4">ตัวอย่างประโยค (ไม่บังคับ)</h3>
+                <div class="space-y-4 font-th">
+                    <div><label class="form-label">ประโยคภาษาญี่ปุ่น</label><input type="text" id="add-ex-jp"
+                            placeholder="เช่น 先生はとても親切です。" class="form-input font-jp"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="form-label">คำแปลไทย</label><input type="text" id="add-ex-th"
+                                placeholder="คุณครูใจดีมาก" class="form-input"></div>
+                        <div><label class="form-label">คำแปลอังกฤษ</label><input type="text" id="add-ex-en"
+                                placeholder="The teacher is very kind." class="form-input font-en"></div>
+                    </div>
+                </div>
+            </div>
+
             <div id="add-status" class="mt-8 text-center min-h-[1.5rem] font-th text-zinc-400 text-sm"></div>
-            <div class="mt-8 flex gap-4">
+            <div class="mt-4 flex gap-4">
                 <button onclick="App.submitNewWord()"
-                    class="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-2xl transition duration-300 figma-button">บันทึกคำศัพท์
-                    (HTTP POST)</button>
+                    class="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-2xl transition duration-300 figma-button border-none">บันทึกข้อมูล
+                    (Save)</button>
             </div>
         </div>
     </div>
 
     <div id="detail-modal"
         class="fixed inset-0 z-50 hidden flex-col justify-center items-center p-4 bg-black/80 backdrop-blur-md transition-opacity">
-        <div class="glass-modal w-full max-w-2xl p-10 relative overflow-y-auto max-h-[90vh] border border-white/5">
+        <div class="glass-modal w-full max-w-3xl p-10 relative overflow-y-auto max-h-[90vh] border border-white/5">
             <button onclick="App.closeDetail()" class="absolute top-6 right-8 close-btn" id="icon-close-modal"></button>
             <div id="detail-content"></div>
         </div>
@@ -309,8 +389,7 @@
             saveBookmarks: (bookmarks) => localStorage.setItem('jdict_bookmarks', JSON.stringify(bookmarks)),
 
             changeView: (view) => {
-                App.currentView = view;
-                App.currentPage = 1;
+                App.currentView = view; App.currentPage = 1;
                 document.body.style.backgroundImage = view === 'start' ? "url('https://i.ibb.co/MyNySgWC/Vector-1.png')" : "url('https://i.ibb.co/k2Dp7P84/garden.jpg')";
                 if (view === 'bookmarks') document.body.style.backgroundImage = "url('https://i.ibb.co/Gvwwck8B/Vector-2.png')";
 
@@ -336,36 +415,40 @@
                         meaning_en: document.getElementById('edit-en').value,
                         pos_id: document.getElementById('edit-pos').value
                     };
+                    const exData = {
+                        japanese_text: document.getElementById('edit-ex-jp').value.trim(),
+                        translation_th: document.getElementById('edit-ex-th').value.trim(),
+                        translation_en: document.getElementById('edit-ex-en').value.trim()
+                    };
+
                     await db.from('words').update({ kanji_text: newData.kanji_text, kana_text: newData.kana_text, romaji: newData.romaji }).eq('id', wordId);
                     await db.from('definitions').update({ meaning_th: newData.meaning_th, meaning_en: newData.meaning_en, pos_id: newData.pos_id }).eq('id', defId);
-                    alert('อัปเดตข้อมูลสำเร็จ!');
-                    App.closeDetail();
-                    App.currentView === 'home' ? fetchData() : fetchBookmarks();
-                } catch (e) { alert('Error: ' + e.message); }
+
+                    // อัปเดตตาราง example_sentences (เคลียร์ของเก่าแล้วบันทึกใหม่)
+                    await db.from('example_sentences').delete().eq('definition_id', defId);
+                    if (exData.japanese_text || exData.translation_th || exData.translation_en) {
+                        await db.from('example_sentences').insert([{ definition_id: defId, ...exData }]);
+                    }
+
+                    alert('อัปเดตสำเร็จ!'); App.closeDetail(); fetchData();
+                } catch (e) { alert(e.message); }
             },
 
             deleteWord: async (wordId) => {
-                if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบคำศัพท์นี้?')) return;
-                try {
-                    await db.from('definitions').delete().eq('word_id', wordId);
-                    await db.from('words').delete().eq('id', wordId);
-                    alert('ลบข้อมูลสำเร็จ!');
-                    App.closeDetail();
-                    App.currentView === 'home' ? fetchData() : fetchBookmarks();
-                } catch (e) { alert('Error: ' + e.message); }
+                if (!confirm('ยืนยันการลบ?')) return;
+                await db.from('definitions').delete().eq('word_id', wordId);
+                await db.from('words').delete().eq('id', wordId);
+                App.closeDetail(); fetchData();
             },
 
             submitNewWord: async () => {
                 const statusEl = document.getElementById('add-status');
-                const wordData = {
-                    kanji_text: document.getElementById('add-kanji').value.trim(),
-                    kana_text: document.getElementById('add-kana').value.trim(),
-                    romaji: document.getElementById('add-romaji').value.trim()
-                };
-                const defData = {
-                    pos_id: document.getElementById('add-pos').value,
-                    meaning_th: document.getElementById('add-meaning-th').value.trim(),
-                    meaning_en: document.getElementById('add-meaning-en').value.trim()
+                const wordData = { kanji_text: document.getElementById('add-kanji').value.trim(), kana_text: document.getElementById('add-kana').value.trim(), romaji: document.getElementById('add-romaji').value.trim() };
+                const defData = { pos_id: document.getElementById('add-pos').value, meaning_th: document.getElementById('add-meaning-th').value.trim(), meaning_en: document.getElementById('add-meaning-en').value.trim() };
+                const exData = {
+                    japanese_text: document.getElementById('add-ex-jp').value.trim(),
+                    translation_th: document.getElementById('add-ex-th').value.trim(),
+                    translation_en: document.getElementById('add-ex-en').value.trim()
                 };
 
                 if (!wordData.kana_text || !defData.pos_id || !defData.meaning_th || !defData.meaning_en) {
@@ -374,38 +457,45 @@
                     return;
                 }
 
-                statusEl.innerText = "กำลังส่งข้อมูล... (HTTP POST)";
+                statusEl.innerText = "กำลังส่งข้อมูล...";
                 try {
                     const { data: newWord, error: wordErr } = await db.from('words').insert([wordData]).select();
                     if (wordErr) throw wordErr;
-                    const { error: defErr } = await db.from('definitions').insert([{ word_id: newWord[0].id, pos_id: defData.pos_id, meaning_th: defData.meaning_th, meaning_en: defData.meaning_en }]);
+
+                    const { data: newDef, error: defErr } = await db.from('definitions').insert([{ word_id: newWord[0].id, pos_id: defData.pos_id, meaning_th: defData.meaning_th, meaning_en: defData.meaning_en }]).select();
                     if (defErr) throw defErr;
-                    statusEl.innerText = "HTTP 201: บันทึกข้อมูลสำเร็จแล้ว! ✨";
+
+                    if (exData.japanese_text || exData.translation_th || exData.translation_en) {
+                        await db.from('example_sentences').insert([{ definition_id: newDef[0].id, ...exData }]);
+                    }
+
+                    statusEl.innerText = "HTTP 201: บันทึกสำเร็จ! ✨";
                     statusEl.className = "mt-8 text-center text-green-400 font-th text-sm font-bold";
-                    setTimeout(() => { UI.closeAddModal(); if (App.currentView === 'home') fetchData(); }, 1500);
+                    setTimeout(() => { UI.closeAddModal(); fetchData(); }, 1500);
                 } catch (e) { statusEl.innerText = e.message; statusEl.className = "mt-8 text-center text-red-400 font-th text-sm"; }
             }
         };
 
         const UI = {
-            initIcons: () => {
-                document.getElementById('icon-search-box').innerHTML = ICONS.search;
-                document.getElementById('icon-close-modal').innerHTML = ICONS.close;
-            },
-            showLoading: () => { document.getElementById('status-message').innerHTML = `${ICONS.loader} ค้นหาข้อมูล...`; document.getElementById('words-list').innerHTML = ''; },
+            initIcons: () => { document.getElementById('icon-search-box').innerHTML = ICONS.search; document.getElementById('icon-close-modal').innerHTML = ICONS.close; },
+            showLoading: () => { document.getElementById('status-message').innerHTML = `${ICONS.loader} กำลังค้นหา...`; document.getElementById('words-list').innerHTML = ''; },
             clearStatus: () => document.getElementById('status-message').innerHTML = '',
 
             openAddModal: async () => {
                 document.getElementById('add-modal').classList.replace('hidden', 'flex');
-                const { data: posList } = await db.from('parts_of_speech').select('id, pos_JP, name_th').order('pos_JP');
+                document.getElementById('add-status').innerText = "";
+                const { data: posList } = await db.from('parts_of_speech').select('id, name_jp, name_th').order('name_jp');
                 if (posList) {
                     document.getElementById('add-pos').innerHTML = '<option value="">-- ประเภทคำ --</option>' +
-                        posList.map(p => `<option value="${p.id}">${p.pos_JP} (${p.name_th})</option>`).join('');
+                        posList.map(p => `<option value="${p.id}">${p.name_jp} (${p.name_th})</option>`).join('');
                 }
             },
             closeAddModal: () => {
                 document.getElementById('add-modal').classList.replace('flex', 'hidden');
-                ['add-kanji', 'add-kana', 'add-romaji', 'add-meaning-th', 'add-meaning-en', 'add-pos'].forEach(id => document.getElementById(id).value = "");
+                ['add-kanji', 'add-kana', 'add-romaji', 'add-meaning-th', 'add-meaning-en', 'add-pos', 'add-ex-jp', 'add-ex-th', 'add-ex-en'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = "";
+                });
             },
 
             createWordCard: (word) => {
@@ -414,17 +504,17 @@
                 const isBM = App.getBookmarks().includes(word.id);
                 return `
                     <article onclick="openDetail(${word.id})" class="figma-card px-12 py-4 flex flex-row items-center gap-8 cursor-pointer hover:bg-white/15 transition-all w-full">
-                        <div class="figma-badge w-[85px] h-[80px] flex justify-center items-center shrink-0 relative z-10">
+                        <div class="figma-badge w-[80px] h-[80px] flex justify-center items-center shrink-0 relative z-10">
                             <span class="font-jp text-3xl font-light text-white text-center px-1">${pos}</span>
                         </div>
                         <div class="flex flex-row justify-between items-center w-full relative z-10">
                             <div class="w-48 shrink-0 flex flex-col">
-                                <span class="furigana">${word.kana_text}</span>
-                                <h2 class="font-jp text-4xl font-medium text-white">${word.kanji_text || word.kana_text}</h2>
+                                <span class="furigana font-jp">${word.kana_text}</span>
+                                <h2 class="font-jp text-3xl font-medium text-white">${word.kanji_text || word.kana_text}</h2>
                             </div>
-                            <div class="flex flex-col gap-0.5 w-full pl-8 border-l border-white/20">
-                                <div><p class="font-th text-3xl text-white truncate">${def.meaning_th || 'ไม่มีคำแปล'}</p></div>
-                                <div><p class="font-en text-2xl text-gray-300 truncate opacity-60">${def.meaning_en || '-'}</p></div>
+                            <div class="flex flex-col gap-0.5 w-full pl-6">
+                                <div><p class="font-th text-2xl text-white truncate">${def.meaning_th || 'ไม่มีคำแปล'}</p></div>
+                                <div><p class="font-en text-xl text-gray-300 truncate opacity-60">${def.meaning_en || '-'}</p></div>
                             </div>
                             <div class="shrink-0 pl-4">
                                 <button onclick="toggleBookmark(${word.id}, event)" class="transition-all duration-300 transform hover:scale-125 ${isBM ? 'text-green-400' : 'text-white/20'}">
@@ -441,8 +531,17 @@
             try {
                 const from = (App.currentPage - 1) * App.itemsPerPage;
                 const to = from + App.itemsPerPage - 1;
-                let query = db.from('words').select('*, definitions (id, meaning_th, meaning_en, parts_of_speech (id, name_jp, pos_JP, name_th, name_en))', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to);
+                let query = db.from('words').select(`
+                    *, 
+                    definitions (
+                        id, meaning_th, meaning_en, 
+                        parts_of_speech (id, name_jp, pos_JP, name_th, name_en),
+                        example_sentences (id, japanese_text, translation_th, translation_en)
+                    )
+                `, { count: 'exact' }).order('created_at', { ascending: false }).range(from, to);
+
                 if (keyword) query = query.or(`kanji_text.ilike.%${keyword}%,kana_text.ilike.%${keyword}%,romaji.ilike.%${keyword}%,definitions.meaning_th.ilike.%${keyword}%,definitions.meaning_en.ilike.%${keyword}%`);
+
                 const { data, count, error } = await query;
                 if (error) throw error;
                 App.currentWords = data || [];
@@ -455,54 +554,78 @@
         async function fetchBookmarks() {
             UI.showLoading();
             const ids = App.getBookmarks();
-            if (!ids.length) { document.getElementById('words-list').innerHTML = '<p class="text-center font-th py-20 opacity-50">ยังไม่มีรายการในพจนานุกรมของคุณ</p>'; UI.clearStatus(); return; }
-            try {
-                const { data, error } = await db.from('words').select('*, definitions(*, parts_of_speech(id, name_jp, pos_JP))').in('id', ids);
-                if (error) throw error;
-                App.currentWords = data || [];
-                UI.clearStatus();
-                document.getElementById('words-list').innerHTML = data.map(word => UI.createWordCard(word)).join('');
-                document.getElementById('pagination-controls').innerHTML = '';
-            } catch (e) { console.error(e); }
+            if (!ids.length) { document.getElementById('words-list').innerHTML = '<p class="text-center font-th py-20 opacity-50">ยังไม่มีรายการ</p>'; UI.clearStatus(); return; }
+            const { data } = await db.from('words').select(`
+                *, 
+                definitions (
+                    *, parts_of_speech(*), example_sentences(*)
+                )
+            `).in('id', ids);
+            App.currentWords = data || []; UI.clearStatus();
+            document.getElementById('words-list').innerHTML = data.map(word => UI.createWordCard(word)).join('');
         }
 
         function renderPagination(total) {
             const pages = Math.ceil(total / App.itemsPerPage);
             const ctr = document.getElementById('pagination-controls');
             if (pages <= 1) { ctr.innerHTML = ''; return; }
-            let html = `<button onclick="changePage(${App.currentPage - 1})" class="px-5 py-2 figma-card ${App.currentPage === 1 ? 'opacity-30 pointer-events-none' : 'hover:bg-green-500/20'} font-th">ก่อนหน้า</button>`;
-            for (let i = 1; i <= pages; i++) html += `<button onclick="changePage(${i})" class="w-12 h-12 figma-card ${i === App.currentPage ? 'bg-green-600 border-green-400 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : 'hover:bg-green-500/20'} font-th">${i}</button>`;
-            ctr.innerHTML = html + `<button onclick="changePage(${App.currentPage + 1})" class="px-5 py-2 figma-card ${App.currentPage === pages ? 'opacity-30 pointer-events-none' : 'hover:bg-green-500/20'} font-th">ถัดไป</button>`;
+            let html = `<button onclick="changePage(${App.currentPage - 1})" class="nav-button ${App.currentPage === 1 ? 'opacity-30 pointer-events-none' : ''}">ก่อนหน้า</button>`;
+            for (let i = 1; i <= pages; i++) html += `<button onclick="changePage(${i})" class="nav-button ${i === App.currentPage ? 'bg-green-600 border-green-400 text-white opacity-100' : ''}">${i}</button>`;
+            ctr.innerHTML = html + `<button onclick="changePage(${App.currentPage + 1})" class="nav-button ${App.currentPage === pages ? 'opacity-30 pointer-events-none' : ''}">ถัดไป</button>`;
         }
 
-        function changePage(n) { App.currentPage = n; window.scrollTo({ top: 0, behavior: 'smooth' }); App.currentView === 'home' ? fetchData(document.getElementById('search-input').value) : fetchBookmarks(); }
-        function toggleBookmark(id, event) { event.stopPropagation(); let bms = App.getBookmarks(); bms = bms.includes(id) ? bms.filter(i => i !== id) : [...bms, id]; App.saveBookmarks(bms); App.currentView === 'home' ? fetchData(document.getElementById('search-input').value) : fetchBookmarks(); }
+        function changePage(n) { App.currentPage = n; window.scrollTo({ top: 0, behavior: 'smooth' }); fetchData(); }
+        function toggleBookmark(id, event) { event.stopPropagation(); let bms = App.getBookmarks(); bms = bms.includes(id) ? bms.filter(i => i !== id) : [...bms, id]; App.saveBookmarks(bms); fetchData(); }
 
         async function openDetail(id) {
             const word = App.currentWords.find(w => w.id === id);
             if (!word) return;
             const def = word.definitions?.[0] || {};
             const pos = def.parts_of_speech || {};
-            renderStaticDetail(word, def, pos);
+            const ex = (def.example_sentences && def.example_sentences.length > 0) ? def.example_sentences[0] : null;
+            renderStaticDetail(word, def, pos, ex);
             document.getElementById('detail-modal').classList.replace('hidden', 'flex');
         }
 
-        function renderStaticDetail(word, def, pos) {
+        function renderStaticDetail(word, def, pos, ex) {
+            let exampleSection = '';
+            if (ex && (ex.japanese_text || ex.translation_th || ex.translation_en)) {
+                exampleSection = `
+                    <div class="bg-zinc-900/50 p-8 rounded-3xl border border-white/5">
+                        <div class="mb-4 text-zinc-500 font-th text-sm font-bold uppercase tracking-widest">ตัวอย่างประโยค</div>
+                        <div class="space-y-4">
+                            <p class="font-jp text-4xl text-white leading-relaxed">${ex.japanese_text || ''}</p>
+                            <div class="pt-2 border-t border-white/10">
+                                ${ex.translation_th ? `<p class="font-th text-3xl text-zinc-300 mt-4">${ex.translation_th}</p>` : ''}
+                                ${ex.translation_en ? `<p class="font-en text-2xl text-zinc-500 opacity-80 mt-2">${ex.translation_en}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            } else {
+                exampleSection = `
+                    <div class="bg-zinc-900/50 p-8 rounded-3xl border border-white/5 text-center">
+                        <p class="font-th text-xl text-zinc-500">ยังไม่มีประโยคตัวอย่าง คุณอยากลองเพิ่มเองไหมครับ?</p>
+                    </div>`;
+            }
+
             document.getElementById('detail-content').innerHTML = `
                 <div class="text-center mb-10">
                     <p class="font-jp text-2xl text-zinc-500 mb-2">${word.kana_text}</p>
                     <h2 class="jp-detail-text" style="font-size: 80px; margin-bottom: 24px;">${word.kanji_text || word.kana_text}</h2>
-                    <span class="inline-block px-6 py-2 rounded-full bg-zinc-900 border border-white/10 text-xl font-jp text-green-400">${pos.pos_JP || 'POS'}</span>
+                    <span class="inline-block px-6 py-2 rounded-full bg-zinc-900 border border-white/10 text-xl font-jp text-green-400">${pos.name_jp || 'POS'}</span>
                 </div>
                 <div class="space-y-6 mb-10">
                     <div class="bg-zinc-900/50 p-8 rounded-3xl border border-white/5">
-                        <div class="mb-4 text-zinc-500 font-th text-xs uppercase tracking-widest">ความหมายไทย</div>
+                        <div class="mb-4 text-zinc-500 font-th text-sm font-bold uppercase tracking-widest">ความหมายไทย</div>
                         <p class="thai-detail-text">${def.meaning_th || '-'}</p>
                     </div>
                     <div class="bg-zinc-900/50 p-8 rounded-3xl border border-white/5">
-                        <div class="mb-4 text-zinc-500 font-th text-xs uppercase tracking-widest">ความหมายอังกฤษ</div>
-                        <p class="en-detail-text">${def.meaning_en || '-'}</p>
+                        <div class="mb-4 text-zinc-500 font-th text-sm font-bold uppercase tracking-widest">ความหมายอังกฤษ</div>
+                        <p class="en-detail-text font-en">${def.meaning_en || '-'}</p>
                     </div>
+                    
+                    ${exampleSection}
+
                 </div>
                 <div class="flex gap-4 border-t border-white/10 pt-8">
                     <button onclick="switchToEditMode(${word.id})" class="flex-1 py-4 rounded-2xl bg-white/5 hover:bg-white/10 transition font-th">แก้ไขข้อมูล</button>
@@ -513,18 +636,37 @@
         async function switchToEditMode(wordId) {
             const word = App.currentWords.find(w => w.id === wordId);
             const def = word.definitions?.[0] || {};
+            const ex = (def.example_sentences && def.example_sentences.length > 0) ? def.example_sentences[0] : {};
             const { data: posList } = await db.from('parts_of_speech').select('*');
+
             document.getElementById('detail-content').innerHTML = `
-                <h3 class="font-th text-xl text-green-400 mb-8">แก้ไขคำศัพท์ (PATCH)</h3>
-                <div class="space-y-4 font-th">
+                <h3 class="font-th text-xl text-green-400 mb-8">แก้ไขคำศัพท์</h3>
+                <div class="space-y-6 font-th">
                     <div class="grid grid-cols-2 gap-4">
                         <div><label class="form-label">คันจิ</label><input id="edit-kanji" value="${word.kanji_text || ''}" class="form-input"></div>
                         <div><label class="form-label">คำอ่าน *</label><input id="edit-kana" value="${word.kana_text}" class="form-input"></div>
                     </div>
                     <div><label class="form-label">โรมาจิ</label><input id="edit-romaji" value="${word.romaji || ''}" class="form-input"></div>
-                    <div><label class="form-label">ประเภทคำ</label><select id="edit-pos" class="form-input">${posList.map(p => `<option value="${p.id}" ${p.id === def.pos_id ? 'selected' : ''}>${p.pos_JP}</option>`).join('')}</select></div>
-                    <div><label class="form-label">ความหมายไทย *</label><input id="edit-th" value="${def.meaning_th}" class="form-input"></div>
-                    <div><label class="form-label">ความหมายอังกฤษ *</label><input id="edit-en" value="${def.meaning_en}" class="form-input"></div>
+                    <div>
+                        <label class="form-label">ประเภทคำ</label>
+                        <select id="edit-pos" class="form-input">
+                            ${posList.map(p => `<option value="${p.id}" ${p.id === def.pos_id ? 'selected' : ''}>${p.name_jp}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="form-label">ความหมายไทย *</label><input id="edit-th" value="${def.meaning_th}" class="form-input"></div>
+                        <div><label class="form-label">ความหมายอังกฤษ *</label><input id="edit-en" value="${def.meaning_en || ''}" class="form-input font-en"></div>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-white/5">
+                        <label class="form-label text-green-400">แก้ไขประโยคตัวอย่าง (ไม่บังคับ)</label>
+                        <input id="edit-ex-jp" value="${ex.japanese_text || ''}" placeholder="ประโยคญี่ปุ่น" class="form-input font-jp mb-2">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input id="edit-ex-th" value="${ex.translation_th || ''}" placeholder="คำแปลไทย" class="form-input">
+                            <input id="edit-ex-en" value="${ex.translation_en || ''}" placeholder="คำแปลอังกฤษ" class="form-input font-en">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="flex gap-4 mt-8"><button onclick="App.saveUpdate(${word.id}, ${def.id})" class="flex-1 py-4 rounded-2xl bg-green-600 font-bold">บันทึกการเปลี่ยนแปลง</button><button onclick="openDetail(${word.id})" class="px-8 py-4 rounded-2xl bg-white/5">ยกเลิก</button></div>`;
         }

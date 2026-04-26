@@ -119,7 +119,8 @@
             gap: 0.25rem;
         }
 
-        .nav-button:hover {
+        .nav-button:hover,
+        .nav-button.active {
             opacity: 1;
             background: rgba(34, 197, 94, 0.1);
             border-color: rgba(34, 197, 94, 0.3);
@@ -134,6 +135,10 @@
             border-radius: 999px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .figma-button:hover {
@@ -252,6 +257,24 @@
             background: #111;
             color: white;
         }
+
+        /* 📍 Flashcard 3D Effects */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 
@@ -267,10 +290,19 @@
                 </div>
             </h1>
             <div class="space-x-4 flex items-center">
-                <button onclick="App.changeView('home')" class="nav-button">หน้าแรก</button>
-                <button onclick="App.changeView('bookmarks')" class="nav-button">พจนานุกรมของฉัน</button>
-                <button onclick="UI.openAddModal()" class="nav-button">
-                    <span class="text-xl leading-none -mt-1">+</span> เพิ่มคำศัพท์
+                <button onclick="App.changeView('home')" id="nav-home" class="nav-button">หน้าแรก</button>
+                <button onclick="App.changeView('bookmarks')" id="nav-bookmarks"
+                    class="nav-button">พจนานุกรมของฉัน</button>
+                <button onclick="App.changeView('flashcards')" id="nav-flashcards"
+                    class="nav-button border-green-500/30 text-green-300 hover:bg-green-500/20">แฟลชการ์ด</button>
+
+                <button onclick="UI.openAddModal()" class="nav-button bg-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    เพิ่มคำศัพท์
                 </button>
             </div>
         </div>
@@ -284,15 +316,16 @@
                     dictionary.</span>
             </h1>
             <button onclick="App.changeView('home')"
-                class="figma-button text-white text-2xl py-6 px-14 font-th tracking-wide">เริ่มต้นกันเลย</button>
+                class="figma-button text-white text-2xl py-6 px-14 font-th tracking-wide border-none">เริ่มต้นกันเลย</button>
         </div>
     </section>
 
     <section id="view-main" class="max-w-5xl mx-auto px-6 mt-10 hidden">
         <div id="search-section" class="mb-10">
             <div class="figma-search-container">
-                <input type="text" id="search-input" placeholder="ค้นหาด้วย คันจิ, ฮิรางานะ หรือความหมาย..."
-                    class="figma-search-box" oninput="App.handleSearch(this.value)">
+                <input type="text" id="search-input"
+                    placeholder="ค้นหาด้วย คันจิ, ฮิรางานะ หรือความหมายภาษาไทยก็ได้นะอ้วน" class="figma-search-box"
+                    oninput="App.handleSearch(this.value)">
                 <span class="absolute right-8 top-5 text-white/20" id="icon-search-box"></span>
             </div>
         </div>
@@ -300,6 +333,11 @@
             class="text-center mb-4 h-8 font-th text-lg text-green-300 flex justify-center items-center gap-2"></div>
         <div id="words-list" class="flex flex-col gap-3"></div>
         <div id="pagination-controls" class="flex justify-center items-center gap-3 mt-12 font-th text-green-300"></div>
+    </section>
+
+    <section id="view-flashcards"
+        class="max-w-3xl mx-auto px-6 mt-10 hidden flex-col items-center justify-center min-h-[60vh]">
+        <div id="flashcard-container" class="w-full relative"></div>
     </section>
 
     <div id="add-modal"
@@ -329,7 +367,7 @@
                     <div><label class="form-label">ความหมายภาษาไทย *</label><input type="text" id="add-meaning-th"
                             placeholder="ความหมายหลัก" class="form-input"></div>
                     <div><label class="form-label">ความหมายภาษาอังกฤษ *</label><input type="text" id="add-meaning-en"
-                            placeholder="English Meaning" class="form-input"></div>
+                            placeholder="English Meaning" class="form-input font-en"></div>
                 </div>
             </div>
 
@@ -337,7 +375,7 @@
                 <h3 class="font-th text-lg text-zinc-400 mb-4">ตัวอย่างประโยค (ไม่บังคับ)</h3>
                 <div class="space-y-4 font-th">
                     <div><label class="form-label">ประโยคภาษาญี่ปุ่น</label><input type="text" id="add-ex-jp"
-                            placeholder="เช่น 先生はとても親切です。" class="form-input font-jp"></div>
+                            placeholder="เช่น 先生はとても親切です。" class="form-input font-jp text-lg"></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div><label class="form-label">คำแปลไทย</label><input type="text" id="add-ex-th"
                                 placeholder="คุณครูใจดีมาก" class="form-input"></div>
@@ -347,7 +385,9 @@
                 </div>
             </div>
 
-            <div id="add-status" class="mt-8 text-center min-h-[1.5rem] font-th text-zinc-400 text-sm"></div>
+            <div id="add-status"
+                class="mt-8 text-center min-h-[1.5rem] font-th text-zinc-400 text-sm flex items-center justify-center gap-2">
+            </div>
             <div class="mt-4 flex gap-4">
                 <button onclick="App.submitNewWord()"
                     class="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-2xl transition duration-300 figma-button border-none">บันทึกข้อมูล
@@ -370,7 +410,10 @@
             bookmarkOutlineCard: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`,
             search: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
             close: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
-            loader: `<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`
+            loader: `<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`,
+            success: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+            arrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`,
+            arrowRight: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`
         };
 
         const CONFIG = {
@@ -384,20 +427,31 @@
             currentPage: 1,
             itemsPerPage: 12,
             currentWords: [],
+            fcWords: [],
+            fcIndex: 0,
 
             getBookmarks: () => JSON.parse(localStorage.getItem('jdict_bookmarks') || '[]'),
             saveBookmarks: (bookmarks) => localStorage.setItem('jdict_bookmarks', JSON.stringify(bookmarks)),
 
             changeView: (view) => {
                 App.currentView = view; App.currentPage = 1;
+
+                document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active', 'border-green-500/30', 'text-green-300'));
+                if (view === 'home') document.getElementById('nav-home')?.classList.add('active', 'border-green-500/30', 'text-green-300');
+                if (view === 'bookmarks') document.getElementById('nav-bookmarks')?.classList.add('active', 'border-green-500/30', 'text-green-300');
+                if (view === 'flashcards') document.getElementById('nav-flashcards')?.classList.add('active', 'border-green-500/30', 'text-green-300');
+
                 document.body.style.backgroundImage = view === 'start' ? "url('https://i.ibb.co/MyNySgWC/Vector-1.png')" : "url('https://i.ibb.co/k2Dp7P84/garden.jpg')";
-                if (view === 'bookmarks') document.body.style.backgroundImage = "url('https://i.ibb.co/Gvwwck8B/Vector-2.png')";
+                if (view === 'bookmarks' || view === 'flashcards') document.body.style.backgroundImage = "url('https://i.ibb.co/Gvwwck8B/Vector-2.png')";
 
                 document.getElementById('view-start').classList.toggle('hidden', view !== 'start');
-                document.getElementById('view-main').classList.toggle('hidden', view === 'start');
+                document.getElementById('view-main').classList.toggle('hidden', view === 'start' || view === 'flashcards');
+                document.getElementById('view-flashcards').classList.toggle('hidden', view !== 'flashcards');
                 document.getElementById('navbar').classList.toggle('hidden', view === 'start');
+
                 if (view === 'home') fetchData();
                 else if (view === 'bookmarks') fetchBookmarks();
+                else if (view === 'flashcards') App.initFlashcards();
             },
 
             handleSearch: (keyword) => {
@@ -411,34 +465,36 @@
                         kanji_text: document.getElementById('edit-kanji').value,
                         kana_text: document.getElementById('edit-kana').value,
                         romaji: document.getElementById('edit-romaji').value,
+                    };
+                    const defUpdate = {
                         meaning_th: document.getElementById('edit-th').value,
                         meaning_en: document.getElementById('edit-en').value,
                         pos_id: document.getElementById('edit-pos').value
-                    };
+                    }
                     const exData = {
                         japanese_text: document.getElementById('edit-ex-jp').value.trim(),
                         translation_th: document.getElementById('edit-ex-th').value.trim(),
                         translation_en: document.getElementById('edit-ex-en').value.trim()
                     };
 
-                    await db.from('words').update({ kanji_text: newData.kanji_text, kana_text: newData.kana_text, romaji: newData.romaji }).eq('id', wordId);
-                    await db.from('definitions').update({ meaning_th: newData.meaning_th, meaning_en: newData.meaning_en, pos_id: newData.pos_id }).eq('id', defId);
+                    await db.from('words').update(newData).eq('id', wordId);
+                    await db.from('definitions').update(defUpdate).eq('id', defId);
 
-                    // อัปเดตตาราง example_sentences (เคลียร์ของเก่าแล้วบันทึกใหม่)
                     await db.from('example_sentences').delete().eq('definition_id', defId);
                     if (exData.japanese_text || exData.translation_th || exData.translation_en) {
                         await db.from('example_sentences').insert([{ definition_id: defId, ...exData }]);
                     }
 
-                    alert('อัปเดตสำเร็จ!'); App.closeDetail(); fetchData();
+                    alert('อัปเดตสำเร็จ!'); App.closeDetail();
+                    App.currentView === 'home' ? fetchData() : fetchBookmarks();
                 } catch (e) { alert(e.message); }
             },
 
             deleteWord: async (wordId) => {
                 if (!confirm('ยืนยันการลบ?')) return;
-                await db.from('definitions').delete().eq('word_id', wordId);
                 await db.from('words').delete().eq('id', wordId);
-                App.closeDetail(); fetchData();
+                App.closeDetail();
+                App.currentView === 'home' ? fetchData() : fetchBookmarks();
             },
 
             submitNewWord: async () => {
@@ -452,28 +508,108 @@
                 };
 
                 if (!wordData.kana_text || !defData.pos_id || !defData.meaning_th || !defData.meaning_en) {
-                    statusEl.innerText = "HTTP 400: กรุณากรอกข้อมูลที่จำเป็น (*) ให้ครบถ้วน";
+                    statusEl.innerHTML = "HTTP 400: กรุณากรอกข้อมูลที่จำเป็น (*) ให้ครบถ้วน";
                     statusEl.className = "mt-8 text-center text-red-400 font-th text-sm";
                     return;
                 }
 
-                statusEl.innerText = "กำลังส่งข้อมูล...";
+                statusEl.innerHTML = `${ICONS.loader} กำลังบันทึกข้อมูล...`;
                 try {
                     const { data: newWord, error: wordErr } = await db.from('words').insert([wordData]).select();
                     if (wordErr) throw wordErr;
 
-                    const { data: newDef, error: defErr } = await db.from('definitions').insert([{ word_id: newWord[0].id, pos_id: defData.pos_id, meaning_th: defData.meaning_th, meaning_en: defData.meaning_en }]).select();
+                    const { data: newDef, error: defErr } = await db.from('definitions').insert([{ word_id: newWord[0].id, ...defData }]).select();
                     if (defErr) throw defErr;
 
                     if (exData.japanese_text || exData.translation_th || exData.translation_en) {
                         await db.from('example_sentences').insert([{ definition_id: newDef[0].id, ...exData }]);
                     }
 
-                    statusEl.innerText = "HTTP 201: บันทึกสำเร็จ! ✨";
-                    statusEl.className = "mt-8 text-center text-green-400 font-th text-sm font-bold";
-                    setTimeout(() => { UI.closeAddModal(); fetchData(); }, 1500);
-                } catch (e) { statusEl.innerText = e.message; statusEl.className = "mt-8 text-center text-red-400 font-th text-sm"; }
-            }
+                    statusEl.innerHTML = `${ICONS.success} บันทึกสำเร็จ!`;
+                    statusEl.className = "mt-8 text-center text-green-400 font-th text-sm font-bold flex justify-center items-center gap-1";
+                    setTimeout(() => { UI.closeAddModal(); App.currentView === 'home' ? fetchData() : fetchBookmarks(); }, 1500);
+                } catch (e) { statusEl.innerHTML = e.message; statusEl.className = "mt-8 text-center text-red-400 font-th text-sm"; }
+            },
+
+            initFlashcards: async () => {
+                const container = document.getElementById('flashcard-container');
+                container.innerHTML = `<div class="text-center font-th text-zinc-400 mt-20 flex justify-center items-center gap-2">${ICONS.loader} กำลังเตรียมการ์ด...</div>`;
+
+                const ids = App.getBookmarks();
+                if (!ids.length) {
+                    container.innerHTML = `<div class="text-center bg-black/40 p-10 rounded-3xl border border-white/10 mt-10">
+                        <p class="font-th text-2xl text-zinc-300">ยังไม่มีคำศัพท์ให้ทบทวน</p>
+                        <p class="font-th text-lg text-zinc-500 mt-2">ไปที่ "หน้าแรก" เพื่อบันทึกคำศัพท์เก็บไว้ในพจนานุกรมของคุณก่อนนะครับ!</p>
+                        <button onclick="App.changeView('home')" class="mt-6 figma-button px-8 py-3 text-white font-th border-none">ไปหน้าค้นหา</button>
+                    </div>`;
+                    return;
+                }
+
+                const { data } = await db.from('words').select(`*, definitions(*, parts_of_speech(*), example_sentences(*))`).in('id', ids);
+                App.fcWords = data ? data.sort(() => Math.random() - 0.5) : []; // Shuffle
+                App.fcIndex = 0;
+                App.renderFlashcard();
+            },
+
+            renderFlashcard: () => {
+                const container = document.getElementById('flashcard-container');
+                if (!App.fcWords.length) return;
+
+                const word = App.fcWords[App.fcIndex];
+                const def = word.definitions?.[0] || {};
+                const ex = (def.example_sentences && def.example_sentences.length > 0) ? def.example_sentences[0] : null;
+
+                container.innerHTML = `
+                    <div class="text-center mb-6">
+                        <span class="font-th text-zinc-400 bg-black/40 px-4 py-1.5 rounded-full border border-white/5 shadow-inner">
+                            การ์ดที่ ${App.fcIndex + 1} จาก ${App.fcWords.length}
+                        </span>
+                    </div>
+
+                    <div class="perspective-1000 w-full h-[400px] cursor-pointer group" onclick="App.toggleFlashcard()">
+                        <div id="flipper" class="relative w-full h-full transition-transform duration-700 transform-style-3d shadow-2xl rounded-[40px]">
+                            
+                            <div class="absolute inset-0 backface-hidden flex flex-col items-center justify-center figma-card border border-white/10">
+                                <h2 class="font-jp text-7xl text-white font-medium drop-shadow-lg text-center px-4">${word.kanji_text || word.kana_text}</h2>
+                                ${word.kanji_text ? `<p class="font-jp text-2xl text-zinc-400 mt-6 bg-black/20 px-6 py-2 rounded-full border border-white/5">${word.kana_text}</p>` : ''}
+                                <p class="font-th text-green-400 mt-10 text-sm opacity-50 flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                                    แตะเพื่อดูคำแปล
+                                </p>
+                            </div>
+
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center figma-card p-10 border border-white/10 bg-gradient-to-br from-zinc-900/40 to-black/60">
+                                <h3 class="font-th text-5xl text-white mb-2 text-center leading-tight drop-shadow-md">${def.meaning_th || '-'}</h3>
+                                <p class="font-en text-2xl text-zinc-400 mb-8">${def.meaning_en || '-'}</p>
+                                
+                                ${ex ? `
+                                    <div class="w-full bg-black/40 p-6 rounded-3xl border border-white/5 text-left">
+                                        <p class="font-jp text-2xl text-white mb-3 leading-relaxed">${ex.japanese_text || ''}</p>
+                                        <p class="font-th text-xl text-zinc-300">${ex.translation_th || ''}</p>
+                                        <p class="font-en text-lg text-zinc-500 mt-1">${ex.translation_en || ''}</p>
+                                    </div>
+                                ` : `
+                                    <div class="w-full bg-black/20 py-4 px-6 rounded-full border border-white/5">
+                                        <p class="font-th text-sm text-zinc-500 text-center">ไม่มีประโยคตัวอย่าง</p>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-6 mt-10">
+                        <button onclick="App.prevFlashcard()" class="figma-button border-none px-6 py-3 font-th text-white text-lg ${App.fcIndex === 0 ? 'opacity-20 pointer-events-none' : ''}">
+                            ${ICONS.arrowLeft} ก่อนหน้า
+                        </button>
+                        <button onclick="App.nextFlashcard()" class="figma-button border-none px-6 py-3 font-th text-white text-lg bg-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:bg-white/30 ${App.fcIndex === App.fcWords.length - 1 ? 'opacity-20 pointer-events-none' : ''}">
+                            ถัดไป ${ICONS.arrowRight}
+                        </button>
+                    </div>
+                `;
+            },
+            toggleFlashcard: () => document.getElementById('flipper').classList.toggle('rotate-y-180'),
+            prevFlashcard: () => { if (App.fcIndex > 0) { App.fcIndex--; App.renderFlashcard(); } },
+            nextFlashcard: () => { if (App.fcIndex < App.fcWords.length - 1) { App.fcIndex++; App.renderFlashcard(); } }
         };
 
         const UI = {
@@ -483,7 +619,7 @@
 
             openAddModal: async () => {
                 document.getElementById('add-modal').classList.replace('hidden', 'flex');
-                document.getElementById('add-status').innerText = "";
+                document.getElementById('add-status').innerHTML = "";
                 const { data: posList } = await db.from('parts_of_speech').select('id, name_jp, name_th').order('name_jp');
                 if (posList) {
                     document.getElementById('add-pos').innerHTML = '<option value="">-- ประเภทคำ --</option>' +
@@ -575,7 +711,7 @@
         }
 
         function changePage(n) { App.currentPage = n; window.scrollTo({ top: 0, behavior: 'smooth' }); fetchData(); }
-        function toggleBookmark(id, event) { event.stopPropagation(); let bms = App.getBookmarks(); bms = bms.includes(id) ? bms.filter(i => i !== id) : [...bms, id]; App.saveBookmarks(bms); fetchData(); }
+        function toggleBookmark(id, event) { event.stopPropagation(); let bms = App.getBookmarks(); bms = bms.includes(id) ? bms.filter(i => i !== id) : [...bms, id]; App.saveBookmarks(bms); App.currentView === 'home' ? fetchData(document.getElementById('search-input').value) : fetchBookmarks(); }
 
         async function openDetail(id) {
             const word = App.currentWords.find(w => w.id === id);
@@ -628,8 +764,8 @@
 
                 </div>
                 <div class="flex gap-4 border-t border-white/10 pt-8">
-                    <button onclick="switchToEditMode(${word.id})" class="flex-1 py-4 rounded-2xl bg-white/5 hover:bg-white/10 transition font-th">แก้ไขข้อมูล</button>
-                    <button onclick="App.deleteWord(${word.id})" class="px-8 py-4 rounded-2xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition font-th">ลบ</button>
+                    <button onclick="switchToEditMode(${word.id})" class="flex-1 py-4 rounded-2xl bg-white/5 hover:bg-white/10 transition font-th border-none">แก้ไขข้อมูล</button>
+                    <button onclick="App.deleteWord(${word.id})" class="px-8 py-4 rounded-2xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition font-th border-none">ลบ</button>
                 </div>`;
         }
 
@@ -660,7 +796,7 @@
 
                     <div class="space-y-4 pt-4 border-t border-white/5">
                         <label class="form-label text-green-400">แก้ไขประโยคตัวอย่าง (ไม่บังคับ)</label>
-                        <input id="edit-ex-jp" value="${ex.japanese_text || ''}" placeholder="ประโยคญี่ปุ่น" class="form-input font-jp mb-2">
+                        <input id="edit-ex-jp" value="${ex.japanese_text || ''}" placeholder="ประโยคญี่ปุ่น" class="form-input font-jp mb-2 text-lg">
                         <div class="grid grid-cols-2 gap-4">
                             <input id="edit-ex-th" value="${ex.translation_th || ''}" placeholder="คำแปลไทย" class="form-input">
                             <input id="edit-ex-en" value="${ex.translation_en || ''}" placeholder="คำแปลอังกฤษ" class="form-input font-en">
@@ -668,7 +804,7 @@
                     </div>
 
                 </div>
-                <div class="flex gap-4 mt-8"><button onclick="App.saveUpdate(${word.id}, ${def.id})" class="flex-1 py-4 rounded-2xl bg-green-600 font-bold">บันทึกการเปลี่ยนแปลง</button><button onclick="openDetail(${word.id})" class="px-8 py-4 rounded-2xl bg-white/5">ยกเลิก</button></div>`;
+                <div class="flex gap-4 mt-8"><button onclick="App.saveUpdate(${word.id}, ${def.id})" class="flex-1 py-4 rounded-2xl bg-green-600 font-bold border-none figma-button">บันทึกการเปลี่ยนแปลง</button><button onclick="openDetail(${word.id})" class="px-8 py-4 rounded-2xl bg-white/5 border-none figma-button">ยกเลิก</button></div>`;
         }
 
         const AppCloseDetail = () => document.getElementById('detail-modal').classList.replace('flex', 'hidden');
